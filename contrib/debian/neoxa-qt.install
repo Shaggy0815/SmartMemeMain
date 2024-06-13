@@ -1,0 +1,6 @@
+usr/local/bin/smartmeme-qt usr/bin
+share/pixmaps/smartmeme32.xpm usr/share/pixmaps
+share/pixmaps/smartmeme16.xpm usr/share/pixmaps
+share/pixmaps/smartmeme128.png usr/share/pixmaps
+debian/smartmeme-qt.desktop usr/share/applications
+debian/smartmeme-qt.protocol usr/share/kde4/services/

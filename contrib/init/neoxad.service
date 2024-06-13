@@ -1,0 +1,22 @@
+[Unit]
+Description=Smartmeme's distributed currency daemon
+After=network.target
+
+[Service]
+User=smartmemecore
+Group=smartmemecore
+
+Type=forking
+PIDFile=/var/lib/smartmemed/smartmemed.pid
+ExecStart=/usr/bin/smartmemed -daemon -pid=/var/lib/smartmemed/smartmemed.pid \
+-conf=/etc/smartmemecore/smartmeme.conf -datadir=/var/lib/smartmemed -disablewallet
+
+Restart=always
+PrivateTmp=true
+TimeoutStopSec=60s
+TimeoutStartSec=2s
+StartLimitInterval=120s
+StartLimitBurst=5
+
+[Install]
+WantedBy=multi-user.target

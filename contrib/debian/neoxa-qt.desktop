@@ -1,0 +1,13 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Smartmeme Core
+Comment=Smartmeme P2P Cryptocurrency
+Comment[de]=Verbinde mit dem Smartmeme peer-to-peer Netzwerk
+Comment[fr]=Smartmeme, monnaie virtuelle cryptographique pair à pair
+Comment[tr]=Smartmeme, eşten eşe kriptografik sanal para birimi
+Exec=smartmeme-qt %u
+Terminal=false
+Type=Application
+Icon=smartmeme128
+MimeType=x-scheme-handler/smartmeme;
+Categories=Office;Finance;

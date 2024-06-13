@@ -1,0 +1,70 @@
+Source: smartmeme
+Section: utils
+Priority: optional
+Maintainer: Holger Schinzel <holger@smartmeme.org>
+Uploaders: Holger Schinzel <holger@smartmeme.org>
+Build-Depends: debhelper,
+ devscripts,
+ automake,
+ libtool,
+ bash-completion,
+ libdb4.8++-dev,
+ libssl-dev,
+ pkg-config,
+ libevent-dev,
+ libboost-system1.48-dev | libboost-system-dev (>> 1.47),
+ libboost-filesystem1.48-dev | libboost-filesystem-dev (>> 1.47),
+ libboost-program-options1.48-dev | libboost-program-options-dev (>> 1.47),
+ libboost-thread1.48-dev | libboost-thread-dev (>> 1.47),
+ libboost-test1.48-dev | libboost-test-dev (>> 1.47),
+ libboost-chrono1.48-dev | libboost-chrono-dev (>> 1.47),
+ libminiupnpc8-dev | libminiupnpc-dev,
+ qt4-qmake, libqt4-dev,
+ qttools5-dev-tools, qttools5-dev,
+ libqrencode-dev,
+ libprotobuf-dev, protobuf-compiler,
+ python,
+ libzmq3-dev
+Standards-Version: 3.9.2
+Homepage: https://www.smartmeme.org/
+Vcs-Git: git://github.com/The-Smartmeme-Endeavor/smartmeme.git
+Vcs-Browser: https://github.com/The-Smartmeme-Endeavor/smartmeme
+
+Package: smartmemed
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: peer-to-peer network based digital currency - daemon
+ Smartmeme is an experimental new digital currency that enables instant, private
+ payments to anyone, anywhere in the world. Smartmeme uses peer-to-peer
+ technology to operate with no central authority: managing transactions
+ and issuing money are carried out collectively by the network. Smartmeme Core
+ is the name of the open source software which enables the use of this currency.
+ .
+ This package provides the daemon, smartmemed, and the CLI tool
+ smartmeme-cli to interact with the daemon.
+
+Package: smartmeme-qt
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: peer-to-peer network based digital currency - Qt GUI
+ Smartmeme is an experimental new digital currency that enables instant, private
+ payments to anyone, anywhere in the world. Smartmeme uses peer-to-peer
+ technology to operate with no central authority: managing transactions
+ and issuing money are carried out collectively by the network. Smartmeme Core
+ is the name of the open source software which enables the use of this currency.
+ .
+ This package provides Smartmeme-Qt, a GUI for Smartmeme based on Qt.
+
+Package: smartmeme-tx
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: peer-to-peer digital currency - standalone transaction tool
+ Smartmeme is an experimental new digital currency that enables instant, private
+ payments to anyone, anywhere in the world. Smartmeme uses peer-to-peer
+ technology to operate with no central authority: managing transactions
+ and issuing money are carried out collectively by the network. Smartmeme Core
+ is the name of the open source software which enables the use of this currency.
+ .
+ This package provides smartmeme-tx, a command-line transaction creation
+ tool which can be used without a smartmeme daemon.  Some means of
+ exchanging minimal transaction data with peers is still required.
