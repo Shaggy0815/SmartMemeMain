@@ -364,7 +364,7 @@ public:
         consensus.nSuperblockStartBlock = 99999999; // The block at which 12.1 goes live (end of final 12.0 budget cycle)
         consensus.nSuperblockStartHash = uint256();
         consensus.nSuperblockCycle = 99999999; // ~(60*24*30)/2.6, actual number of blocks per month is 200700 / 12 = 16725
-        consensus.nGovernanceMinQuorum = 10;
+        consensus.nGovernanceMinQuorum = 1;
         consensus.nGovernanceFilterElements = 20000;
         consensus.nSmartnodeMinimumConfirmations = 15;
         consensus.BIPCSVEnabled = true;
@@ -437,15 +437,15 @@ public:
         pchMessageStart[3] = 0x45; // E
         nDefaultPort = 7282;
         nPruneAfterHeight = 100000;
-        //FindMainNetGenesisBlock(1717416590, 0x20001fff, "main");
-        uint32_t nGenesisTime = 1717416590;	
+        //FindMainNetGenesisBlock(1718359370, 0x20001fff, "main");
+        uint32_t nGenesisTime = 1718359370;	
         
-	    genesis = CreateGenesisBlock(nGenesisTime, 1375, 0x20001fff, 4, 5000 * COIN);
+	    genesis = CreateGenesisBlock(nGenesisTime, 452, 0x20001fff, 4, 5000 * COIN);
         uint256 mix_hash;
         consensus.hashGenesisBlock = genesis.GetHashFull(mix_hash);
         genesis.mix_hash = mix_hash;
         //std::cout << "hashGenesisBlock " << consensus.hashGenesisBlock.GetHex() << std::endl;
-	    assert(consensus.hashGenesisBlock == uint256S("001dac2ee224946bd22e7e87839adee474b4ab73620a94d43ede078232be9930"));
+	    assert(consensus.hashGenesisBlock == uint256S("00092e19933ca26a4e3d5980aa06ea06eb220f928c7e1eedd2245ffefa63ce7c"));
         assert(genesis.hashMerkleRoot == uint256S("7c5152cafed4f81ec1c3e2758ee5aeda41a30a93883da3df24b255307454d819"));
 
         //todo: Make dnsseeder ourselfs
