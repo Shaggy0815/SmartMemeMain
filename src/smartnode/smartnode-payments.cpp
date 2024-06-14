@@ -322,25 +322,32 @@ bool CSmartnodePayments::GetBlockTxOuts(int nBlockHeight, CAmount blockReward, s
     voutSmartnodePaymentsRet.clear();
  
     CAmount smartnodeReward = GetSmartnodePayment(nBlockHeight, blockReward, specialTxFee);
-    if(smartnodeReward == 0) {
-    	return false;
+    LogPrintf("CSmartnodePayments::%s -- smartnodeReward=%lld\n", __func__, smartnodeReward);
+    if (smartnodeReward == 0) {
+        LogPrintf("CSmartnodePayments::%s -- smartnodeReward is 0, returning false\n", __func__);
+        return false;
     }
 
     const CBlockIndex* pindex;
     {
         LOCK(cs_main);
         pindex = chainActive[nBlockHeight - 1];
+        LogPrintf("CSmartnodePayments::%s -- pindex height=%d\n", __func__, pindex->nHeight);
     }
-    uint256 proTxHash;
-    auto dmnPayee = deterministicMNManager->GetListForBlock(pindex).GetMNPayee();
+
+    auto mnList = deterministicMNManager->GetListForBlock(pindex);
+    LogPrintf("CSmartnodePayments::%s -- mnList size=%zu\n", __func__, mnList.GetAllMNsCount());
+
+    auto dmnPayee = mnList.GetMNPayee();
     if (!dmnPayee) {
+        LogPrintf("CSmartnodePayments::%s -- ERROR no payee found for block at height %d\n", __func__, nBlockHeight);
         return false;
     }
 
+    LogPrintf("CSmartnodePayments::%s -- dmnPayee found with ProTxHash=%s\n", __func__, dmnPayee->proTxHash.ToString());
+
     CAmount operatorReward = 0;
     if (dmnPayee->nOperatorReward != 0 && dmnPayee->pdmnState->scriptOperatorPayout != CScript()) {
-        // This calculation might eventually turn out to result in 0 even if an operator reward percentage is given.
-        // This will however only happen in a few years when the block rewards drops very low.
         operatorReward = (smartnodeReward * dmnPayee->nOperatorReward) / 10000;
         smartnodeReward -= operatorReward;
     }
@@ -352,8 +359,12 @@ bool CSmartnodePayments::GetBlockTxOuts(int nBlockHeight, CAmount blockReward, s
         voutSmartnodePaymentsRet.emplace_back(operatorReward, dmnPayee->pdmnState->scriptOperatorPayout);
     }
 
+    LogPrintf("CSmartnodePayments::%s -- voutSmartnodePaymentsRet size=%zu\n", __func__, voutSmartnodePaymentsRet.size());
+
     return true;
 }
+
+
 
 // Is this smartnode scheduled to get paid soon?
 // -- Only look ahead up to 8 blocks to allow for propagation of the latest 2 blocks of votes

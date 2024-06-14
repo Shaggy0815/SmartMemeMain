@@ -1219,37 +1219,29 @@ CAmount GetBlockSubsidy(int nPrevBits, int nPrevHeight, const Consensus::Params&
 
 CAmount GetSmartnodePayment(int nHeight, CAmount blockValue, CAmount specialTxFees)
 { 
+    LogPrintf("GetSmartnodePayment called with nHeight=%d, blockValue=%lld, specialTxFees=%lld\n", nHeight, blockValue, specialTxFees);
 
     size_t mnCount = chainActive.Tip() == nullptr ? 0 : deterministicMNManager->GetListForBlock(chainActive.Tip()).GetAllMNsCount();
-    if(mnCount >= 1 || Params().NetworkIDString() != CBaseChainParams::MAIN) {
+    LogPrintf("mnCount=%zu\n", mnCount);
+
+    if (mnCount >= 1 || (mnCount >= 1 && Params().NetworkIDString() != CBaseChainParams::MAIN)) {
+        LogPrintf("Condition met for paying smartnodes\n");
+
         int percentage = Params().GetConsensus().nCollaterals.getRewardPercentage(nHeight);
+        LogPrintf("Reward percentage=%d\n", percentage);
 
-        CAmount specialFeeReward = specialTxFees * Params().GetConsensus().nSpecialRewardShare.smartnode; 
-        CAmount baseReward = blockValue * percentage / 100;
-        CAmount totalReward = baseReward + specialFeeReward;
-        CAmount additionalReward = 0;
-        if (blockValue > 0) {
-            additionalReward = (totalReward * mnCount) / (mnCount + 1);
-        }
+        CAmount specialFeeReward = specialTxFees * Params().GetConsensus().nSpecialRewardShare.smartnode;
+        LogPrintf("specialFeeReward=%lld\n", specialFeeReward);
 
-        CAmount finalReward = (totalReward + additionalReward) - (blockValue + specialTxFees + additionalReward + baseReward);
-        LogPrintf("Smartnode Payment Calculation:\n");
-        LogPrintf("Height: %d\n", nHeight);
-        LogPrintf("Block Value: %d\n", blockValue);
-        LogPrintf("Special TX Fees: %d\n", specialTxFees);
-        LogPrintf("Percentage: %d\n", percentage);
-        LogPrintf("Special Fee Reward: %d\n", specialFeeReward);
-        LogPrintf("Base Reward: %d\n", baseReward);
-        LogPrintf("Total Reward: %d\n", totalReward);
-        LogPrintf("Additional Reward: %d\n", additionalReward);
-        LogPrintf("Final Reward: %d\n", finalReward);
-        return finalReward;
+        CAmount smartnodePayment = blockValue * percentage / 100 + specialFeeReward;
+        LogPrintf("smartnodePayment=%lld\n", smartnodePayment);
+
+        return smartnodePayment;
     } else {
-        LogPrintf("No Smartnode Payment: mnCount is %d, NetworkID is %s\n", mnCount, Params().NetworkIDString());
+        LogPrintf("Condition not met for paying smartnodes, returning 0\n");
         return 0;
     }
 }
-
 
 
 
