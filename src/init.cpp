@@ -719,8 +719,8 @@ std::string HelpMessage(HelpMessageMode mode)
 
 std::string LicenseInfo()
 {
-    const std::string URL_SOURCE_CODE = "<https://github.com/SmartmemeChain/Smartmeme>";
-    const std::string URL_WEBSITE = "<https://smartmeme.net>";
+    const std::string URL_SOURCE_CODE = "<https://github.com/SmartMemeKawpow/SmartMemeMain>";
+    const std::string URL_WEBSITE = "https://smartmeme.online";
 
     return CopyrightHolders(_("Copyright (C)"), 2014, COPYRIGHT_YEAR) + "\n" +
            "\n" +

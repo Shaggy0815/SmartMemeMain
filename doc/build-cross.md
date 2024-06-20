@@ -58,8 +58,8 @@ If you want to build the windows installer with `make deploy` you need [NSIS](ht
 
 Acquire the source in the usual way:
 
-    git clone https://github.com/SmartmemeChain/Smartmeme
-    cd smartmeme
+    git clone https://github.com/SmartMemeKawpow/SmartMemeMain
+    cd SmartMemeMain
 
 ### Building for 64-bit Windows
 

@@ -23,7 +23,7 @@ Smartmeme Core is released under the terms of the MIT license. For more informat
 ### Development Process
 -------------------
 
-Our `master` branch is regularly built and tested, though it is not guaranteed to be completely stable. We create [Tags](https://github.com/SmartmemeChain/Smartmeme/tags) regularly to indicate new official, stable release versions of Smartmeme Core.
+Our `master` branch is regularly built and tested, though it is not guaranteed to be completely stable. We create [Tags](https://github.com/SmartMemeKawpow/SmartMemeMain/tags) regularly to indicate new official, stable release versions of Smartmeme Core.
 
 The contribution workflow is detailed in [CONTRIBUTING.md](CONTRIBUTING.md).
 
