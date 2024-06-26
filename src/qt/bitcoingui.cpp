@@ -637,10 +637,25 @@ void BitcoinGUI::createToolBars()
         spacer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
         toolbar->addWidget(spacer);
 
+// Create a QLabel for displaying the spinner icon
+QLabel *spinnerLabel = new QLabel();
+toolbar->addWidget(spinnerLabel); // Add the spinner label to the toolbar
+
+// Update the spinner icon pixmap
+spinnerLabel->setPixmap(platformStyle->SingleColorIcon(
+    QString(":/movies/spinner-%1").arg(spinnerFrame, 3, 10, QChar('0')))
+    .pixmap(STATUSBAR_ICONSIZE, STATUSBAR_ICONSIZE));
+
+// Increment spinner frame for the next frame in the animation
+spinnerFrame = (spinnerFrame + 1) % SPINNER_FRAMES;
+
+
+/**
         QLabel *logoLabel = new QLabel();
         QPixmap logoPixmap(":/images/smartmeme_logo_toolbar");
         logoLabel->setPixmap(logoPixmap);
         toolbar->addWidget(logoLabel);
+*/
 
         /** Create additional container for toolbar and walletFrame and make it the central widget.
             This is a workaround mostly for toolbar styling on Mac OS but should work fine for every other OSes too.
