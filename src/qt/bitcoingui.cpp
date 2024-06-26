@@ -632,30 +632,41 @@ void BitcoinGUI::createToolBars()
         toolbar->addAction(ManageAssetsAction);
         toolbar->addAction(RestrictedAssetsAction);
 
-        // Add Smartmeme logo on the right side
-        QWidget* spacer = new QWidget();
-        spacer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-        toolbar->addWidget(spacer);
+// Add Smartmeme logo on the left side
+// Add spacer to push the spinner to the left
+QWidget* spacerLeft = new QWidget();
+spacerLeft->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+toolbar->addWidget(spacerLeft);
 
 // Create a QLabel for displaying the spinner icon
 QLabel *spinnerLabel = new QLabel();
+int spinnerSize = 50; // Set a fixed size for the spinner icon (adjust as needed)
+spinnerLabel->setFixedSize(spinnerSize, spinnerSize);
 toolbar->addWidget(spinnerLabel); // Add the spinner label to the toolbar
 
-// Update the spinner icon pixmap
-spinnerLabel->setPixmap(platformStyle->SingleColorIcon(
-    QString(":/movies/spinner-%1").arg(spinnerFrame, 3, 10, QChar('0')))
-    .pixmap(STATUSBAR_ICONSIZE, STATUSBAR_ICONSIZE));
+// Function to update spinner icon
+auto updateSpinnerIcon = [=]() {
+    // Get the spinner icon pixmap
+    QPixmap spinnerPixmap = platformStyle->SingleColorIcon(
+        QString(":/movies/spinner-%1").arg(spinnerFrame, 3, 10, QChar('0')))
+        .pixmap(QSize(spinnerSize, spinnerSize));
 
-// Increment spinner frame for the next frame in the animation
-spinnerFrame = (spinnerFrame + 1) % SPINNER_FRAMES;
+    // Set the pixmap to the spinner label
+    spinnerLabel->setPixmap(spinnerPixmap);
+};
 
+// Create a timer to update the spinner icon
+QTimer *timer = new QTimer(spinnerLabel);
+connect(timer, &QTimer::timeout, [=]() {
+    updateSpinnerIcon();
+    spinnerFrame = (spinnerFrame + 1) % SPINNER_FRAMES; // Increment spinner frame for the next frame in the animation
+});
+timer->start(11); // Adjust the interval as needed
 
-/**
-        QLabel *logoLabel = new QLabel();
-        QPixmap logoPixmap(":/images/smartmeme_logo_toolbar");
-        logoLabel->setPixmap(logoPixmap);
-        toolbar->addWidget(logoLabel);
-*/
+// Call the update function initially
+updateSpinnerIcon();
+
+// Add smartmeme logo end
 
         /** Create additional container for toolbar and walletFrame and make it the central widget.
             This is a workaround mostly for toolbar styling on Mac OS but should work fine for every other OSes too.
